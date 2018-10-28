@@ -16,11 +16,12 @@ news = []
 with open(CONF) as f:
     news = json.loads(f.read())
 
+
 @routes.get('/')
 @aiohttp_jinja2.template('template.html')
 async def redir(request):
     passage = random.choice(news['news'])
-    return { 'news': passage }
+    return {'news': passage}
 
 if __name__ == '__main__':
     app = web.Application()
