@@ -11,7 +11,7 @@
         <meta http-equiv="pragma" content="no-cache" />
         <meta http-equiv="refresh" content="10; url={{ news.url or news.archive }}" />
         <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet"> 
-        <title>Shadiao news!</title>
+        <title>Shadiao News!</title>
         <style>
             .copyleft {
                 display:inline-block;
@@ -34,25 +34,25 @@
     </head>
     <body>
         <header>
-            <h1>Shadiao news!</h1>
-            <aside>Here is one of the {{ news.type }} news! You will be redirected to it in 15 seconds.</aside>
+            <h1>Shadiao News!</h1>
+            <aside>Here's an example of {{ news.type }} news! Redirecting in 15 seconds...</aside>
         </header>
         <hr />
-        <p>The point? {{ news.desc }}</p>
+        <p>Their point? {{ news.desc }}</p>
         <br />
-        <h2>And here are the links if your browser isn't tame enough:</h2>
+        <h2>Here are the links to the original article, should your browser fail to redirect:</h2>
         <ul>
         {% if news.url %}
             <li>Original: <a href="{{ news.url }}">{{ news.url }}</a></li>
         {% endif %}
         {% if news.archive %}
-            <li>Archive: <a href="{{ news.archive }}">{{ news.archive }}</a></li>
+            <li>Archived: <a href="{{ news.archive }}">{{ news.archive }}</a></li>
         {% endif %}
         </ul>
         <br />
         <hr />
         <p>Source code: <a href="https://github.com/RedL0tus/cykablyat.news">https://github.com/RedL0tus/cykablyat.news</a></p>
-        <p>Pull requests & url submissions are highly welcomed!</p>
+        <p>Pull requests & URL submissions are highly welcome!</p>
         <hr />
         <footer>
             <p><span class="copyleft">&copy;</span>2018 <a href="cykablyat.news">cykablyat.news</a></p>
