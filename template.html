@@ -17,9 +17,14 @@
                 display:inline-block;
                 transform: rotate(180deg);
             }
+            body {
+                max-width: auto;
+                overflow-wrap: break-word;
+                font-family: 'Roboto Mono', monospace;
+            }
         </style>
     </head>
-    <body style="font-family: 'Roboto Mono', monospace;">
+    <body>
         <header>
             <h1>Shadiao news!</h1>
             <aside>Here is one of the {{ news.type }} news! You will be redirected to it in 15 seconds.</aside>
