@@ -16,6 +16,12 @@ CONF = 'config.json'
 PORT = 10010
 HOST = '0.0.0.0'
 PID_FILE = 'cykablyat.pid'
+HEADERS = {
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    'Pragma': 'no-cache',
+    'Expires': '0',
+    'X-Served-By': 'Blyat'
+}
 
 # Sanic & SanicJinja2 instances
 APP = Sanic(__name__)
@@ -68,7 +74,21 @@ class Cyka(Blyat):
         :return: Response rendered by SanicJinja2
         """
         passage = random.choice(self.news['news'])
-        return JINJA.render('index.html', request, news=passage)
+        return JINJA.render(
+            'index.html', request, news=passage,
+            headers=HEADERS
+        )
+
+    async def list(self, request):
+        """
+        List all the news
+        :param request: Provided by Sanic
+        :return: Response rendered by SanicJinja2
+        """
+        return JINJA.render(
+            'list.html', request, news=self.news['news'],
+            headers=HEADERS
+        )
 
 
 if __name__ == '__main__':
@@ -81,6 +101,7 @@ if __name__ == '__main__':
     # Initialize the instance
     ayy = Cyka(config_path=CONF)
     APP.add_route(ayy.redir, '/')
+    APP.add_route(ayy.list, '/list')
     # Activate signal handler
     signal.signal(signal.SIGHUP, ayy.signal_handler)  # SIGHUP
     # Link start!

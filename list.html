@@ -1,10 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewpoint" content="width=device-width, initial-scale=1" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+        <title>All news listed</title>
+        <style>
+            .copyleft {
+                display:inline-block;
+                transform: rotate(180deg);
+            }
+            body {
+                max-width: min-content;
+                overflow-wrap: break-word;
+                font-family: 'Roboto Mono', monospace;
+            }
+        </style>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-97897080-3"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-97897080-3');
+        </script>
+    </head>
+    <body>
+        <header>
+            <h1>Shadiao News list</h1>
+            <aside>All the shadiao news in the record</aside>
+        </header>
+        <hr />
+        <ul>
+        {% for article in news %}
+            <li>
+                <p><a href="{{ article.url }}">{{ article.url }}</a></p>
+                <ul>
+                    <li><p>Type: {{ article.type }}</p></li>
+                    <li><p>Descritpion: {{ article.desc }}</p></li>
+                    <li><p>Archive: <a href="{{ article.archive }}">{{ article.archive }}</a></p></li>
+                </ul>
+            </li>
+        {% endfor %}
+        </ul>
+        <br />
+        <hr />
+        <p>Source code: <a href="https://github.com/RedL0tus/cykablyat.news">https://github.com/RedL0tus/cykablyat.news</a></p>
+        <p>Pull requests & URL submissions are highly welcome!</p>
+        <hr />
+        <footer>
+            <p><span class="copyleft">&copy;</span>2019 <a href="https://cykablyat.news">cykablyat.news</a></p>
+        </footer>
+    </body>
 </html>
