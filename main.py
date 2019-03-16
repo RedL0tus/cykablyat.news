@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 
+import os
 import json
 import random
+import signal
 
 # Sanic!!!
 from sanic import Sanic
@@ -13,6 +15,7 @@ from sanic_jinja2 import SanicJinja2
 CONF = 'config.json'
 PORT = 10010
 HOST = '0.0.0.0'
+PID_FILE = 'cykablyat.pid'
 
 # Sanic & SanicJinja2 instances
 APP = Sanic(__name__)
@@ -36,7 +39,7 @@ class Cyka(Blyat):
         self.reload()
         logger.info('Instance initialized')
 
-    def reload(self):
+    def reload(self, *args):
         """
         Reload the configuration
         :return: None
@@ -58,6 +61,13 @@ class Cyka(Blyat):
 
 if __name__ == '__main__':
     logger.info('Starting up')
+    logger.info('PID: %s' % os.getpid())
+    with open(PID_FILE, 'w') as pid_f:
+        pid_f.write(str(os.getpid()))
     ayy = Cyka(config_path=CONF)
+    signal.signal(signal.SIGHUP, ayy.reload)  # Reload configuration when received SIGHUP
     APP.add_route(ayy.redir, '/')
-    APP.run(host=HOST, port=PORT)
+    try:
+        APP.run(host=HOST, port=PORT)
+    finally:
+        os.remove(PID_FILE)
