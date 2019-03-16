@@ -39,14 +39,26 @@ class Cyka(Blyat):
         self.reload()
         logger.info('Instance initialized')
 
-    def reload(self, *args):
+    def reload(self):
         """
         Reload the configuration
         :return: None
         """
         with open(self.config_path) as f:
             self.news = json.loads(f.read())
-        logger.info('Configuration loaded')
+        logger.info('Configuration (re)loaded')
+        return
+
+    def signal_handler(self, signum, frame):
+        """
+        Singal handler for reloading configuration
+        :param signum: The number of the signal
+        :param frame: The stack frame provided by signal
+        :return: None
+        """
+        logger.info('Received SIGNAL(%s), reloading configuration' % signum)
+        logger.debug('Frame: %s', frame)
+        self.reload()
         return
 
     async def redir(self, request):
@@ -56,18 +68,23 @@ class Cyka(Blyat):
         :return: Response rendered by SanicJinja2
         """
         passage = random.choice(self.news['news'])
-        return JINJA.render('template.html', request, news=passage)
+        return JINJA.render('index.html', request, news=passage)
 
 
 if __name__ == '__main__':
+    # Start the server
     logger.info('Starting up')
     logger.info('PID: %s' % os.getpid())
+    # Write pid to file
     with open(PID_FILE, 'w') as pid_f:
         pid_f.write(str(os.getpid()))
+    # Initialize the instance
     ayy = Cyka(config_path=CONF)
-    signal.signal(signal.SIGHUP, ayy.reload)  # Reload configuration when received SIGHUP
     APP.add_route(ayy.redir, '/')
+    # Activate signal handler
+    signal.signal(signal.SIGHUP, ayy.signal_handler)  # SIGHUP
+    # Link start!
     try:
         APP.run(host=HOST, port=PORT)
     finally:
-        os.remove(PID_FILE)
+        os.remove(PID_FILE)  # Remove PID file on exit
