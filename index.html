@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewpoint" content="width=device-width, initial-scale=1" />
-        <meta http-equiv="refresh" content="15; url={{ news.url or news.archive }}" />
+        <meta http-equiv="refresh" content="15; url={{ news.link or news.archive }}" />
         <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet"> 
         <title>Shadiao News!</title>
         <style>
@@ -33,13 +33,15 @@
             <aside>Here's an example of {{ news.type }} news! Redirecting in 15 seconds...</aside>
         </header>
         <hr />
-        <h2>Their point?</h2>
-        <strong>{{ news.desc }}</strong>
+        <h2>The title:</h2>
+        <strong>{{ news.title }}</strong>
+        <h2>The reason:</h2>
+        <strong>{{ news.description }}</strong>
         <br />
         <h2>Here are the links to the original article, if your browser isn't that tamed:</h2>
         <ul>
-        {% if news.url %}
-            <li>Original: <a href="{{ news.url }}">{{ news.url }}</a></li>
+        {% if news.link %}
+            <li>Original: <a href="{{ news.link }}">{{ news.link }}</a></li>
         {% endif %}
         {% if news.archive %}
             <li>Archived: <a href="{{ news.archive }}">{{ news.archive }}</a></li>

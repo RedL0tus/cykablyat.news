@@ -35,11 +35,18 @@
         <ul>
         {% for article in news %}
             <li>
-                <p><a href="{{ article.url }}">{{ article.url }}</a></p>
+                <p>{{ article.title }}</p>
                 <ul>
+                {% if article.link %}
+                    <li><p>Link: <a href="{{ article.link }}">{{ article.link }}</a></p></li>
+                {% endif %}
                     <li><p>Type: {{ article.type }}</p></li>
-                    <li><p>Descritpion: {{ article.desc }}</p></li>
+                {% if article.description %}
+                    <li><p>Descritpion: {{ article.description }}</p></li>
+                {% endif %}
+                {% if article.archive %}
                     <li><p>Archive: <a href="{{ article.archive }}">{{ article.archive }}</a></p></li>
+                {% endif %}
                 </ul>
             </li>
         {% endfor %}

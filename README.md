@@ -6,8 +6,8 @@ Source code of [cykablyat.news](https://cykablyat.news).
 What is this for?
 -----------------
 
-This is... hmm... actually a hall of shame for news medias.
-This site will randomly redirect you to one of the {shadiao, fake} news in [config.json](config.json).
+A hall of shame for medias.
+This site will randomly redirect you to one of the news recorded in [news directory](news).
 
 Want to add more?
 -----------------

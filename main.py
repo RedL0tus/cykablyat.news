@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 
 import os
-import json
+import yaml
 import random
 import signal
 
@@ -12,6 +12,7 @@ from sanic.log import logger
 from sanic_jinja2 import SanicJinja2
 
 # Configurations
+NEWS = 'news'
 CONF = 'config.json'
 PORT = 10010
 HOST = '0.0.0.0'
@@ -41,7 +42,7 @@ class Cyka(Blyat):
         :param config_path:
         """
         self.config_path = config_path
-        self.news = dict()
+        self.news = list()
         self.reload()
         logger.info('Instance initialized')
 
@@ -50,8 +51,17 @@ class Cyka(Blyat):
         Reload the configuration
         :return: None
         """
-        with open(self.config_path) as f:
-            self.news = json.loads(f.read())
+        if not os.path.exists(NEWS) and not os.path.isdir(NEWS):
+            logger.error('News directory not found, quitting...')
+            exit(1)
+        for source_type in os.listdir(NEWS):
+            for source in os.listdir(NEWS + '/' + source_type):
+                with open(NEWS + '/' + source_type + '/' + source) as source_f:
+                    source_content = yaml.load(source_f.read(), Loader=yaml.FullLoader)
+                source_parsed = source_content
+                source_parsed['type'] = source_type
+                self.news.append(source_parsed)
+                logger.debug('Loaded %s' % NEWS + '/' + source_type + '/' + source)
         logger.info('Configuration (re)loaded')
         return
 
@@ -73,7 +83,7 @@ class Cyka(Blyat):
         :param request: Provided by Sanic
         :return: Response rendered by SanicJinja2
         """
-        passage = random.choice(self.news['news'])
+        passage = random.choice(self.news)
         return JINJA.render(
             'index.html', request, news=passage,
             headers=HEADERS
@@ -86,7 +96,7 @@ class Cyka(Blyat):
         :return: Response rendered by SanicJinja2
         """
         return JINJA.render(
-            'list.html', request, news=self.news['news'],
+            'list.html', request, news=self.news,
             headers=HEADERS
         )
 

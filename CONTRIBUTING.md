@@ -8,23 +8,33 @@ Before submission
 
 You should confirm that your submission:
  - Must not because of your own opinion, it have to be really, really dumb.
- - ...
+ - You need to state why this is dumb in the description.
 
 How can I submit urls?
 ----------------------
 
-All of the urls are stored in [config.json](config.json).
-Pull requests and issues are both OK.
+Article information are stored in the [news directory](news).
 
-What will be accepted?
-----------------------
+Structure:
+```
+news
+└── fake (Type of the news)
+    └── big-hack.yaml (Title of the article)
+```
 
-In order to be accepted, your submission have to meet these requirements:
- - Must include:
-   - At least one of the following URLs:
-     - Link to the original post.
-     - Link to archive of the post.
-   - Type of it, it have to be one adjective word.
-   - A one-line description about why this is dumb.
+Fields in the yaml file:
+```yaml
+title: "The Big Hack: How China Used a Tiny Chip to Infiltrate U.S. Companies"
+link: "https://www.bloomberg.com/news/features/2018-10-04/the-big-hack-how-china-used-a-tiny-chip-to-infiltrate-america-s-top-companies"
+archive: "https://webcache.googleusercontent.com/search?q=cache:RKqi2EuG9dMJ:https://www.bloomberg.com/news/features/2018-10-04/the-big-hack-how-china-used-a-tiny-chip-to-infiltrate-america-s-top-companies"
+description: "A chip has that kind of capability is kind of impossible right now. Customers of Supermicro like Amazon, Apple claimed they didn't find that kind of chip in their systems as well."
+```
 
-To be continued...
+ - title: Title of the article.
+ - link: Link to the source of the article.
+ - archive: Link to the archive of the article.
+ - description: A brief description of why this article is dumb. 
+
+Title, description and at least one of link and archive are required.
+
+Pull requests and issues contain the information above are OK.
