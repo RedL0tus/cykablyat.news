@@ -1,5 +1,12 @@
+# Virtual env
 venv
+
+# Editor/IDE
 .vscode
 .idea
+
+# Temporary file
 cykablyat.pid
+
+# Webhook listener configuration
 trigger.yaml
