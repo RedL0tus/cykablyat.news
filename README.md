@@ -1,7 +1,9 @@
-cykablyat.news
+Shadiao News!(cykablyat.news)
 ==============
 
 Source code of [cykablyat.news](https://cykablyat.news).
+
+*Shadiao: It is similar to "dumb" in Chinese.
 
 What is this for?
 -----------------
